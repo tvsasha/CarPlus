@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CarPlus"
         mc:Ignorable="d"
-        Title="Login" Height="450" Width="1000">
+        Title="CARPLUS" Height="450" Width="1000">
     <Grid>
         
         <StackPanel Margin="20">
@@ -14,17 +14,16 @@
                 <Button Content="Войти" Click="LoginButton_Click" Width="100" Margin="0,0,10,0"/>
                 <Button Content="Добавить авто" Click="AddCarButton_Click" Width="100"/>
             </StackPanel>
-            <ListView Name="lstCars">
+            <ListView x:Name="lstCars" Grid.Row="1" Margin="10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="VIN" DisplayMemberBinding="{Binding VIN}" Width="100"/>
                         <GridViewColumn Header="Модель" DisplayMemberBinding="{Binding Model}" Width="100"/>
                         <GridViewColumn Header="Цвет" DisplayMemberBinding="{Binding Color}" Width="100"/>
-                        <GridViewColumn Header="Комплектация" DisplayMemberBinding="{Binding Configuration}" Width="150"/>
+                        <GridViewColumn Header="Конфигурация" DisplayMemberBinding="{Binding Configuration}" Width="100"/>
                         <GridViewColumn Header="Цена" DisplayMemberBinding="{Binding Price}" Width="100"/>
-                        <GridViewColumn Header="Продавец" DisplayMemberBinding="{Binding SellerName}" Width="100"/>
-                        <GridViewColumn Header="Статус" DisplayMemberBinding="{Binding Status}" Width="100"/>
-                        <GridViewColumn Header="Описание" DisplayMemberBinding="{Binding Description}" Width="190"/>
+                        <GridViewColumn Header="Продавец" DisplayMemberBinding="{Binding SellerName}" Width="150"/>
+                        <GridViewColumn Header="Описание" DisplayMemberBinding="{Binding Description}" Width="260"/>
                     </GridView>
                 </ListView.View>
             </ListView>

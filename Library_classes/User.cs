@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace Library_classes
 {
-    internal class User
+    public class User
     {
         public string FullName { get; set; }
         public string Phone { get; set; }
         public string Email { get; set; }
-        public string Description { get; set; }
+        public string Password { get; set; }
     }
 }

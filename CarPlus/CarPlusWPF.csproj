@@ -8,4 +8,9 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Library_brains\Library_brains.csproj" />
+    <ProjectReference Include="..\Library_classes\Library_classes.csproj" />
+  </ItemGroup>
+
 </Project>

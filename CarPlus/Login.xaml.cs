@@ -1,8 +1,10 @@
 ﻿using CarPlus;
+using Library_classes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -20,23 +22,51 @@ namespace CarPlusWPF
     /// </summary>
     public partial class Login : Window
     {
+        private string _filePath = "users.json";
+        private List<User> _users;
+
         public Login()
         {
             InitializeComponent();
+            LoadUsers();
+        }
+
+        private void LoadUsers()
+        {
+            if (System.IO.File.Exists(_filePath))
+            {
+                var json = System.IO.File.ReadAllText(_filePath);
+                _users = JsonSerializer.Deserialize<List<User>>(json) ?? new List<User>();
+            }
+            else
+            {
+                _users = new List<User>();
+            }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow mainWindow = new MainWindow();
-            mainWindow.Show();
-            Close();
+            string email = txtEmail.Text;
+            string password = txtPassword.Password;
+
+            User user = _users.FirstOrDefault(u => u.Email == email && u.Password == password);
+            if (user != null)
+            {
+                MainWindow mainWindow = new MainWindow();
+                mainWindow.Show();
+                Close();
+            }
+            else
+            {
+                MessageBox.Show("Неверный email или пароль. Попробуйте снова.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void Login_Closed(object sender, EventArgs e)
         {
             MainWindow mainWindow = new MainWindow();
-            mainWindow.Hide();  
             mainWindow.Show();         
+            Close();
         }
     }
 }

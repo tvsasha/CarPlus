@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CarPlusWPF"
         mc:Ignorable="d"
-        Title="AddCar" Height="550" Width="400" Closed="Window_Closed" >
+        Title="AddCar" Height="550" Width="400" >
     <Grid>
         <StackPanel Margin="20">
             <TextBlock Text="VIN" Margin="0,0,0,5"/>
@@ -23,8 +23,8 @@
             <TextBlock Text="Описание" Margin="0,0,0,5"/>
             <TextBox Name="txtDescription" Margin="0,0,0,20" Height="100" TextWrapping="Wrap" AcceptsReturn="True"/>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="20,0,0,0">
-                <Button Content="Добавить"  Width="100" Margin="0,0,10,0"/>
-                <Button Content="Отмена"  Width="100" Click="Button_Click"/>
+                <Button Content="Добавить" Click="AddButton_Click" Width="100" Margin="0,0,10,0"/>
+                <Button Content="Отмена"  Width="100" Click="CancelButton_Click"/>
             </StackPanel>
         </StackPanel>
     </Grid>

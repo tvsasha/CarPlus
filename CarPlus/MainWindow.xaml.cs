@@ -1,5 +1,7 @@
 ﻿using CarPlusWPF;
+using Library_classes;
 using System.Text;
+using System.Text.Json;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -21,6 +23,29 @@ namespace CarPlus
         public MainWindow()
         {
             InitializeComponent();
+            LoadCars();
+            DisplayCars();
+        }
+
+        private string _filePath = "cars.json";
+        private List<Car> _cars;
+
+        private void LoadCars()
+        {
+            if (System.IO.File.Exists(_filePath))
+            {
+                var json = System.IO.File.ReadAllText(_filePath);
+                _cars = JsonSerializer.Deserialize<List<Car>>(json) ?? new List<Car>();
+            }
+            else
+            {
+                _cars = new List<Car>();
+            }
+        }
+
+        private void DisplayCars()
+        {
+            lstCars.ItemsSource = _cars;
         }
 
         private void LoginButton_Click(object sender, RoutedEventArgs e)

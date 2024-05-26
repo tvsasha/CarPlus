@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CarPlusWPF"
         mc:Ignorable="d"
-        Title="Login" Closed="Login_Closed" Height="300" Width="400">
+        Title="Login" Height="300" Width="400">
     <Grid>
         <StackPanel Margin="20">
             <TextBlock Text="Email" Margin="0,0,0,5"/>
@@ -13,8 +13,8 @@
             <TextBlock Text="Пароль" Margin="0,0,0,5"/>
             <PasswordBox Name="txtPassword" Margin="0,0,0,20"/>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="20,0,0,0">
-                <Button Content="Войти"  Width="100" Margin="0,0,10,0"/>
-                <Button Content="Отмена"  Width="100" Click="Button_Click"/>
+                <Button Content="Войти" Click="Button_Click" Width="100" Margin="0,0,10,0"/>
+                <Button Content="Отмена"  Width="100" Click="Login_Closed"/>
             </StackPanel>
         </StackPanel>
     </Grid>
