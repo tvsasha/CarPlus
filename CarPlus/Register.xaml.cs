@@ -22,9 +22,21 @@ namespace CarPlusWPF
     /// </summary>
     public partial class Register : Window
     {
-        public Register()
+        private User _user;
+
+        public Register(User user = null)
         {
             InitializeComponent();
+
+            _user = user ?? new User();
+            DataContext = _user;
+
+            if (_user != null)
+            {
+                txtFullName.Text = _user.FullName;
+                txtEmail.Text = _user.Email;
+                txtPhone.Text = _user.Phone;
+            }
 
             if (System.IO.File.Exists(_filePath))
             {

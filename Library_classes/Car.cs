@@ -11,5 +11,7 @@
         public string Description { get; set; }
         public DateTime ArrivalDate { get; set; }
         public string Status { get; set; }
+        public string SellerEmail { get; set; }
+        public string PhotoPath { get; set; }
     }
 }

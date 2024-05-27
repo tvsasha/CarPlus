@@ -1,7 +1,9 @@
 ﻿using CarPlus;
 using Library_classes;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
@@ -22,83 +24,85 @@ namespace CarPlusWPF
     /// </summary>
     public partial class AddCar : Window
     {
-        private string _filePath = "cars.json";
-        private List<Car> _cars;
+        private Car _car;
 
-        public AddCar()
+        public AddCar(Car car = null)
         {
             InitializeComponent();
+            _car = car ?? new Car();
+            DataContext = _car;
 
-            if (System.IO.File.Exists(_filePath))
+            if (_car != null)
             {
-                var json = System.IO.File.ReadAllText(_filePath);
-                _cars = JsonSerializer.Deserialize<List<Car>>(json) ?? new List<Car>();
-            }
-            else
-            {
-                _cars = new List<Car>();
+                txtVIN.Text = _car.VIN;
+                txtModel.Text = _car.Model;
+                txtColor.Text = _car.Color;
+                txtConfiguration.Text = _car.Configuration;
+                txtPrice.Text = _car.Price.ToString();
+                txtSellerName.Text = _car.SellerName;
+                txtDescription.Text = _car.Description;
+                if (!string.IsNullOrEmpty(_car.PhotoPath))
+                {
+                    imgPhoto.Source = new BitmapImage(new Uri(_car.PhotoPath, UriKind.RelativeOrAbsolute));
+                }
             }
         }
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
-            string vin = txtVIN.Text;
-            string model = txtModel.Text;
-            string color = txtColor.Text;
-            string configuration = txtConfiguration.Text;
-            decimal price;
-            if (!decimal.TryParse(txtPrice.Text, out price))
+            _car.VIN = txtVIN.Text;
+            _car.Model = txtModel.Text;
+            _car.Color = txtColor.Text;
+            _car.Configuration = txtConfiguration.Text;
+            _car.Price = decimal.Parse(txtPrice.Text);
+            _car.SellerName = txtSellerName.Text;
+            _car.Description = txtDescription.Text;
+            _car.SellerEmail = Login.CurrentUser.Email;
+
+            if (_car.PhotoPath == null && imgPhoto.Source != null)
             {
-                MessageBox.Show("Пожалуйста, введите корректную цену.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
+                SavePhoto();
             }
-            string sellerName = txtSellerName.Text;
-            string description = txtDescription.Text;
-
-            if (string.IsNullOrWhiteSpace(vin) ||
-                string.IsNullOrWhiteSpace(model) ||
-                string.IsNullOrWhiteSpace(color) ||
-                string.IsNullOrWhiteSpace(configuration) ||
-                string.IsNullOrWhiteSpace(sellerName) ||
-                string.IsNullOrWhiteSpace(description))
-            {
-                MessageBox.Show("Пожалуйста, заполните все поля.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
-
-            Car newCar = new Car
-            {
-                VIN = vin,
-                Model = model,
-                Color = color,
-                Configuration = configuration,
-                Price = price,
-                SellerName = sellerName,
-                Description = description
-            };
-
-            _cars.Add(newCar);
-            SaveCars();
-
-            MessageBox.Show("Автомобиль успешно добавлен!", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
 
             MainWindow mainWindow = new MainWindow();
+            mainWindow.AddCar(_car);
             mainWindow.Show();
             Close();
+        }
+        
+        private void SavePhoto()
+        {
+            string imagesPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images");
+            if (!Directory.Exists(imagesPath))
+            {
+                Directory.CreateDirectory(imagesPath);
+            }
+
+            string photoFileName = $"{_car.VIN}.jpg";
+            string photoPath = System.IO.Path.Combine(imagesPath, photoFileName);
+
+            // Save the photo to the specified path (you need to implement this)
+            // SavePhotoToPath(photoPath);
+
+            _car.PhotoPath = photoPath;
+        }
+
+        private void UploadPhotoButton_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Image files (*.png;*.jpeg;*.jpg)|*.png;*.jpeg;*.jpg";
+            if (openFileDialog.ShowDialog() == true)
+            {
+                imgPhoto.Source = new BitmapImage(new Uri(openFileDialog.FileName, UriKind.Absolute));
+                _car.PhotoPath = openFileDialog.FileName;
+            }
         }
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow mainWindow = new MainWindow();
-            mainWindow.Show();
+            UserCabinet userCabinet = new UserCabinet();
+            userCabinet.Show();
             Close();
-        }
-
-        private void SaveCars()
-        {
-            var options = new JsonSerializerOptions { WriteIndented = true };
-            var json = JsonSerializer.Serialize(_cars, options);
-            System.IO.File.WriteAllText(_filePath, json);
         }
     }
 }

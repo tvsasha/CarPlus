@@ -6,27 +6,31 @@
         xmlns:local="clr-namespace:CarPlus"
         mc:Ignorable="d"
         Title="CARPLUS" Height="450" Width="1000">
+    
     <Grid>
-        
-        <StackPanel Margin="20">
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,20">
-                <Button Content="Зарегистрироваться"  Width="120" Margin="0,0,10,0" Click="RegisterButton_Click"/>
-                <Button Content="Войти" Click="LoginButton_Click" Width="100" Margin="0,0,10,0"/>
-                <Button Content="Добавить авто" Click="AddCarButton_Click" Width="100"/>
-            </StackPanel>
-            <ListView x:Name="lstCars" Grid.Row="1" Margin="10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
+            <Button Content="Вход" Width="100" Margin="0,0,10,0" Click="LoginButton_Click"/>
+            <Button Content="Регистрация" Width="100" Margin="0,0,10,0" Click="RegisterButton_Click"/>
+        </StackPanel>
+        <Grid Grid.Row="1">
+            <ListView Name="lvCars" Margin="10" SelectionChanged="LvCars_SelectionChanged">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="VIN" DisplayMemberBinding="{Binding VIN}" Width="100"/>
                         <GridViewColumn Header="Модель" DisplayMemberBinding="{Binding Model}" Width="100"/>
                         <GridViewColumn Header="Цвет" DisplayMemberBinding="{Binding Color}" Width="100"/>
-                        <GridViewColumn Header="Конфигурация" DisplayMemberBinding="{Binding Configuration}" Width="100"/>
                         <GridViewColumn Header="Цена" DisplayMemberBinding="{Binding Price}" Width="100"/>
-                        <GridViewColumn Header="Продавец" DisplayMemberBinding="{Binding SellerName}" Width="150"/>
-                        <GridViewColumn Header="Описание" DisplayMemberBinding="{Binding Description}" Width="260"/>
+                        <GridViewColumn Header="Продавец" DisplayMemberBinding="{Binding SellerName}" Width="100"/>
+                        <GridViewColumn Header="Описание" DisplayMemberBinding="{Binding Description}" Width="200"/>
                     </GridView>
                 </ListView.View>
             </ListView>
-        </StackPanel>
+            <Button Content="Добавить машину" Click="AddCarButton_Click" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="150" Margin="10"/>
+        </Grid>
     </Grid>
 </Window>

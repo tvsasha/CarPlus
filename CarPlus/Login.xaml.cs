@@ -24,6 +24,7 @@ namespace CarPlusWPF
     {
         private string _filePath = "users.json";
         private List<User> _users;
+        public static User CurrentUser { get; private set; } // Текущий пользователь
 
         public Login()
         {
@@ -52,17 +53,29 @@ namespace CarPlusWPF
             User user = _users.FirstOrDefault(u => u.Email == email && u.Password == password);
             if (user != null)
             {
-                MainWindow mainWindow = new MainWindow();
-                mainWindow.Show();
-                Close();
+                CurrentUser = user; 
+
+                if (user.IsAdmin)
+                {
+                    // Откройте администраторскую панель
+                    AdminPanel adminPanel = new AdminPanel();
+                    adminPanel.Show();
+                    Close();
+                }
+                else
+                {
+                    // Откройте обычную панель пользователя
+                    MainWindow mainWindow = new MainWindow();
+                    mainWindow.Show();
+                    Close();
+                }
             }
             else
             {
                 MessageBox.Show("Неверный email или пароль. Попробуйте снова.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-
-        private void Login_Closed(object sender, EventArgs e)
+            private void Login_Closed(object sender, EventArgs e)
         {
             MainWindow mainWindow = new MainWindow();
             mainWindow.Show();         
