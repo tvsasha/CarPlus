@@ -1,4 +1,5 @@
-﻿using Library_classes;
+﻿using CarPlus;
+using Library_classes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -57,7 +58,7 @@ namespace CarPlusWPF
         {
             if (lvAllCars.SelectedItem is Car selectedCar)
             {
-               
+                return;
             }
         }
 
@@ -65,9 +66,19 @@ namespace CarPlusWPF
         {
             if (lvAllCars.SelectedItem is Car selectedCar)
             {
-                AddCar addCarWindow = new AddCar(selectedCar);
-                addCarWindow.Show();
-                Close();
+                EditCarAdmin editCarWindow = new EditCarAdmin(selectedCar);
+                editCarWindow.ShowDialog();
+                RefreshCarList();
+            }
+        }
+
+        private void EditUserButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (lvAllUsers.SelectedItem is User selectedUser)
+            {
+                EditUserAdmin editUserAdmin = new EditUserAdmin(selectedUser);
+                editUserAdmin.ShowDialog();
+                RefreshUserList();
             }
         }
 
@@ -77,31 +88,23 @@ namespace CarPlusWPF
             {
                 allCars.Remove(selectedCar);
                 SaveAllCars();
-                lvAllCars.ItemsSource = null;
-                lvAllCars.ItemsSource = allCars;
+                RefreshCarList();
             }
         }
 
         private void SaveAllCars()
         {
-            var json = JsonSerializer.Serialize(allCars);
+            var options = new JsonSerializerOptions { WriteIndented = true };
+            var json = JsonSerializer.Serialize(allCars, options);
             System.IO.File.WriteAllText(carsFilePath, json);
         }
 
         private void LvAllUsers_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            // Handle user selection change if needed
+            
         }
 
-        private void EditUserButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (lvAllUsers.SelectedItem is User selectedUser)
-            {
-                Register registerWindow = new Register(selectedUser);
-                registerWindow.Show();
-                Close();
-            }
-        }
+        
 
         private void DeleteUserButton_Click(object sender, RoutedEventArgs e)
         {
@@ -109,15 +112,34 @@ namespace CarPlusWPF
             {
                 allUsers.Remove(selectedUser);
                 SaveAllUsers();
-                lvAllUsers.ItemsSource = null;
-                lvAllUsers.ItemsSource = allUsers;
+                RefreshUserList();
             }
+        }
+
+        private void RefreshUserList()
+        {
+            lvAllUsers.ItemsSource = null;
+            lvAllUsers.ItemsSource = allUsers;
+        }
+
+        private void RefreshCarList()
+        {
+            lvAllCars.ItemsSource = null;
+            lvAllCars.ItemsSource = allCars;
         }
 
         private void SaveAllUsers()
         {
-            var json = JsonSerializer.Serialize(allUsers);
+            var options = new JsonSerializerOptions { WriteIndented = true };
+            var json = JsonSerializer.Serialize(allUsers, options);
             System.IO.File.WriteAllText(usersFilePath, json);
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow mainWindow = new MainWindow();
+            mainWindow.Show();
+            Close();
         }
     }
 }

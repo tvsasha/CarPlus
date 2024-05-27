@@ -1,5 +1,4 @@
-﻿using CarPlus;
-using Library_classes;
+﻿using Library_classes;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
@@ -20,16 +19,17 @@ using System.Windows.Shapes;
 namespace CarPlusWPF
 {
     /// <summary>
-    /// Логика взаимодействия для AddCar.xaml
+    /// Логика взаимодействия для EditCar.xaml
     /// </summary>
-    public partial class AddCar : Window
+    public partial class EditCar : Window
     {
         private Car _car;
+        private string _filePath = "cars.json";
 
-        public AddCar(Car car = null)
+        public EditCar(Car car)
         {
             InitializeComponent();
-            _car = car ?? new Car();
+            _car = car;
             DataContext = _car;
 
             if (_car != null)
@@ -48,28 +48,25 @@ namespace CarPlusWPF
             }
         }
 
-        private void AddButton_Click(object sender, RoutedEventArgs e)
+        private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            _car.VIN = txtVIN.Text;
             _car.Model = txtModel.Text;
             _car.Color = txtColor.Text;
             _car.Configuration = txtConfiguration.Text;
             _car.Price = decimal.Parse(txtPrice.Text);
-            _car.SellerName = txtSellerName.Text;
             _car.Description = txtDescription.Text;
-            _car.SellerEmail = Login.CurrentUser.Email;
 
-            if (_car.PhotoPath == null && imgPhoto.Source != null)
+            if (string.IsNullOrEmpty(_car.PhotoPath) && imgPhoto.Source != null)
             {
                 SavePhoto();
             }
 
-            MainWindow mainWindow = new MainWindow();
-            mainWindow.AddCar(_car);
-            mainWindow.Show();
+            SaveAllCars();
             Close();
+            UserCabinet userCabinet = new UserCabinet();
+            userCabinet.Show();
         }
-        
+
         private void SavePhoto()
         {
             string imagesPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images");
@@ -95,11 +92,32 @@ namespace CarPlusWPF
             }
         }
 
+        private void SaveAllCars()
+        {
+            var json = System.IO.File.ReadAllText(_filePath);
+            var allCars = JsonSerializer.Deserialize<List<Car>>(json) ?? new List<Car>();
+
+            var carToUpdate = allCars.FirstOrDefault(c => c.VIN == _car.VIN);
+            if (carToUpdate != null)
+            {
+                carToUpdate.Model = _car.Model;
+                carToUpdate.Color = _car.Color;
+                carToUpdate.Configuration = _car.Configuration;
+                carToUpdate.Price = _car.Price;
+                carToUpdate.Description = _car.Description;
+                carToUpdate.PhotoPath = _car.PhotoPath;
+            }
+
+            var options = new JsonSerializerOptions { WriteIndented = true };
+            json = JsonSerializer.Serialize(allCars, options);
+            System.IO.File.WriteAllText(_filePath, json);
+        }
+
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow mainWindow = new MainWindow();
-            mainWindow.Show();
             Close();
+            UserCabinet userCabinet = new UserCabinet();
+            userCabinet.Show();
         }
     }
 }

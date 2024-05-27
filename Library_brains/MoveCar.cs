@@ -13,7 +13,6 @@ namespace Library_brains
             void SaveChanges();
         }
 
-        // IUserRepository.cs
         public interface IUserRepository
         {
             void AddUser(User user);
@@ -22,5 +21,7 @@ namespace Library_brains
             IEnumerable<User> GetAllUsers();
             void SaveChanges();
         }
+
+
     }
 }

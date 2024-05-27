@@ -1,5 +1,4 @@
-﻿using CarPlus;
-using Library_classes;
+﻿using Library_classes;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
@@ -20,16 +19,17 @@ using System.Windows.Shapes;
 namespace CarPlusWPF
 {
     /// <summary>
-    /// Логика взаимодействия для AddCar.xaml
+    /// Логика взаимодействия для EditCarAdmin.xaml
     /// </summary>
-    public partial class AddCar : Window
+    public partial class EditCarAdmin : Window
     {
         private Car _car;
+        private string _carsFilePath = "cars.json";
 
-        public AddCar(Car car = null)
+        public EditCarAdmin(Car car)
         {
             InitializeComponent();
-            _car = car ?? new Car();
+            _car = car;
             DataContext = _car;
 
             if (_car != null)
@@ -48,7 +48,7 @@ namespace CarPlusWPF
             }
         }
 
-        private void AddButton_Click(object sender, RoutedEventArgs e)
+        private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
             _car.VIN = txtVIN.Text;
             _car.Model = txtModel.Text;
@@ -57,19 +57,49 @@ namespace CarPlusWPF
             _car.Price = decimal.Parse(txtPrice.Text);
             _car.SellerName = txtSellerName.Text;
             _car.Description = txtDescription.Text;
-            _car.SellerEmail = Login.CurrentUser.Email;
 
             if (_car.PhotoPath == null && imgPhoto.Source != null)
             {
                 SavePhoto();
             }
 
-            MainWindow mainWindow = new MainWindow();
-            mainWindow.AddCar(_car);
-            mainWindow.Show();
+            SaveAllCars();
             Close();
         }
-        
+
+        private void SaveAllCars()
+        {
+            var json = File.ReadAllText(_carsFilePath);
+            var allCars = JsonSerializer.Deserialize<List<Car>>(json) ?? new List<Car>();
+
+            var carToUpdate = allCars.FirstOrDefault(c => c.VIN == _car.VIN);
+            if (carToUpdate != null)
+            {
+                carToUpdate.Model = _car.Model;
+                carToUpdate.Color = _car.Color;
+                carToUpdate.Configuration = _car.Configuration;
+                carToUpdate.Price = _car.Price;
+                carToUpdate.SellerName = _car.SellerName;
+                carToUpdate.Description = _car.Description;
+                carToUpdate.PhotoPath = _car.PhotoPath;
+            }
+
+            var options = new JsonSerializerOptions { WriteIndented = true };
+            json = JsonSerializer.Serialize(allCars, options);
+            File.WriteAllText(_carsFilePath, json);
+        }
+
+        private void UploadPhotoButton_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Image files (*.png;*.jpeg;*.jpg)|*.png;*.jpeg;*.jpg";
+            if (openFileDialog.ShowDialog() == true)
+            {
+                imgPhoto.Source = new BitmapImage(new Uri(openFileDialog.FileName, UriKind.Absolute));
+                _car.PhotoPath = openFileDialog.FileName;
+            }
+        }
+
         private void SavePhoto()
         {
             string imagesPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images");
@@ -84,21 +114,8 @@ namespace CarPlusWPF
             _car.PhotoPath = photoPath;
         }
 
-        private void UploadPhotoButton_Click(object sender, RoutedEventArgs e)
-        {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "Image files (*.png;*.jpeg;*.jpg)|*.png;*.jpeg;*.jpg";
-            if (openFileDialog.ShowDialog() == true)
-            {
-                imgPhoto.Source = new BitmapImage(new Uri(openFileDialog.FileName, UriKind.Absolute));
-                _car.PhotoPath = openFileDialog.FileName;
-            }
-        }
-
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow mainWindow = new MainWindow();
-            mainWindow.Show();
             Close();
         }
     }

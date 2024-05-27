@@ -19,6 +19,7 @@
                         </ListView.View>
                     </ListView>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10,0,0,10" VerticalAlignment="Bottom">
+                        <Button Content="Главное меню"  Width="100" Click="Button_Click" Margin="0,0,10,0"/>
                         <Button Content="Редактировать" Click="EditCarButton_Click" Width="100" Margin="0,0,10,0"/>
                         <Button Content="Удалить" Click="DeleteCarButton_Click" Width="100"/>
                     </StackPanel>

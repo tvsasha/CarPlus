@@ -1,4 +1,5 @@
-﻿using Library_classes;
+﻿using CarPlus;
+using Library_classes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,7 +37,7 @@ namespace CarPlusWPF
             {
                 var json = System.IO.File.ReadAllText(_filePath);
                 var allCars = JsonSerializer.Deserialize<List<Car>>(json) ?? new List<Car>();
-                _userCars = allCars.Where(c => c.SellerName == Login.CurrentUser.Email).ToList();
+                _userCars = allCars.Where(c => c.SellerName == Login.CurrentUser.FullName).ToList();
             }
             else
             {
@@ -58,6 +59,53 @@ namespace CarPlusWPF
                 CarDetails carDetailsWindow = new CarDetails(selectedCar);
                 carDetailsWindow.Show();
             }
+        }
+
+        private void EditCar_Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (lvUserCars.SelectedItem is Car selectedCar)
+            {
+                EditCar editCarWindow = new EditCar(selectedCar);
+                editCarWindow.Show();
+                Close();
+            }
+        }
+
+        private void DeleteCar_Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (lvUserCars.SelectedItem is Car selectedCar)
+            {
+                _userCars.Remove(selectedCar);
+                SaveAllCars();
+                RefreshUserCars();
+            }
+        }
+
+        private void SaveAllCars()
+        {
+            if (System.IO.File.Exists(_filePath))
+            {
+                var json = System.IO.File.ReadAllText(_filePath);
+                var allCars = JsonSerializer.Deserialize<List<Car>>(json) ?? new List<Car>();
+                var remainingCars = allCars.Where(c => c.SellerName != Login.CurrentUser.FullName).ToList();
+                remainingCars.AddRange(_userCars);
+                var options = new JsonSerializerOptions { WriteIndented = true };
+                json = JsonSerializer.Serialize(remainingCars, options);
+                System.IO.File.WriteAllText(_filePath, json);
+            }
+        }
+
+        private void RefreshUserCars()
+        {
+            lvUserCars.ItemsSource = null;
+            lvUserCars.ItemsSource = _userCars;
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow mainWindow = new MainWindow();
+            mainWindow.Show();
+            Close();
         }
     }
 }

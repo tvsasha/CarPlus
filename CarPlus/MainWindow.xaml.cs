@@ -42,17 +42,16 @@ namespace CarPlus
 
         private void AddCarButton_Click(object sender, RoutedEventArgs e)
         {
-            //if (Login.CurrentUser == null)
-            //{
-            //    MessageBox.Show("Вы должны войти в систему, чтобы добавить автомобиль.");
-            //    return;
-            //}
+            if (Login.CurrentUser == null)
+            {
+                MessageBox.Show("Войдите, чтобы добавить автомобиль.");
+                return;
+            }
 
-            //AddCar addCarWindow = new AddCar();
-            //addCarWindow.Show();
-            //Close();
-            AdminPanel adminPanel = new AdminPanel();
-            adminPanel.Show();
+            AddCar addCarWindow = new AddCar();
+            addCarWindow.Show();
+            Close();
+            
         }
 
         public void AddCar(Car car)
@@ -90,6 +89,18 @@ namespace CarPlus
                 CarDetails carDetailsWindow = new CarDetails(selectedCar);
                 carDetailsWindow.Show();
             }
+        }
+
+        private void UserCabinet(object sender, RoutedEventArgs e)
+        {
+            if (Login.CurrentUser == null)
+            {
+                MessageBox.Show("Войдите в систему для доступа к личному кабинету");
+                return;
+            }
+            UserCabinet userCabinet = new UserCabinet();
+            userCabinet.Show();
+            Close();
         }
     }
 }

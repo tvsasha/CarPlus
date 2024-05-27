@@ -17,7 +17,13 @@
                     </GridView>
                 </ListView.View>
             </ListView>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+            <Button Content="Главное меню"  Width="150" Margin="10" Click="Button_Click"/>
             <Button Content="Добавить объявление" Click="AddCarButton_Click" Width="150" Margin="10"/>
+            <Button Content="Редактировать объявление" Click="EditCar_Button_Click" Width="150" Margin="10"/>
+            <Button Content="Удалить объявление" Click="DeleteCar_Button_Click" Width="150" Margin="10"/>
+            </StackPanel>
+            
         </StackPanel>
     </Grid>
 </Window>

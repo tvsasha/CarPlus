@@ -1,0 +1,30 @@
+﻿<Window x:Class="CarPlusWPF.EditUserAdmin"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CarPlusWPF"
+        mc:Ignorable="d"
+        Title="EditUserAdmin" Height="400" Width="400">
+    <Grid>
+        <StackPanel Margin="20">
+                <TextBlock Text="ФИО" Margin="0,0,0,5"/>
+                <TextBox Name="txtFullName" Margin="0,0,0,10"/>
+                <TextBlock Text="Телефон" Margin="0,0,0,5"/>
+                <TextBox Name="txtPhone" Margin="0,0,0,10"/>
+                <TextBlock Text="Электронная почта" Margin="0,0,0,5"/>
+                <TextBox Name="txtEmail" Margin="0,0,0,10"/>
+                <TextBlock Text="Пароль" Margin="0,0,0,5"/>
+                <PasswordBox Name="txtPassword" Margin="0,0,0,10"/>
+                <TextBlock Text="Подтвердите пароль" Margin="0,0,0,5"/>
+                <PasswordBox Name="txtConfirmPassword" Margin="0,0,0,10"/>
+                <TextBlock Text="Администратор" Margin="0,0,0,5"/>
+                <CheckBox Name="chkIsAdmin" Margin="0,0,0,10"/>
+                
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="20,0,0,0">
+                    <Button Content="Сохранить" Click="SaveButton_Click" Width="100" Margin="0,0,10,0"/>
+                    <Button Content="Отмена" Click="CancelButton_Click" Width="100"/>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+</Window>
