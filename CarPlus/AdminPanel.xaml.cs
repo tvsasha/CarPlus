@@ -62,6 +62,17 @@ namespace CarPlusWPF
             }
         }
 
+        private void LvCars_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (lvAllCars.SelectedItem is Car selectedCar)
+            {
+                CarDetails carDetailsWindow = new CarDetails(selectedCar);
+                carDetailsWindow.Topmost = true; // Сделать окно верхним
+                carDetailsWindow.Show();
+                carDetailsWindow.Topmost = false; // Вернуть свойство в false после отображения
+            }
+        }
+
         private void EditCarButton_Click(object sender, RoutedEventArgs e)
         {
             if (lvAllCars.SelectedItem is Car selectedCar)

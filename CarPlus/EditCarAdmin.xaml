@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CarPlusWPF"
         mc:Ignorable="d"
-        Title="Редактировать машину" Height="700" Width="400">
+         Title="Редактировать машину" Height="850" Width="400">
     <Grid>
         <StackPanel Margin="20">
             <TextBlock Text="VIN" Margin="0,0,0,5"/>
@@ -18,8 +18,14 @@
             <TextBox Name="txtConfiguration" Margin="0,0,0,10"/>
             <TextBlock Text="Цена" Margin="0,0,0,5"/>
             <TextBox Name="txtPrice" Margin="0,0,0,10"/>
+            <TextBlock Text="Статус" Margin="0,0,0,5"/>
+            <TextBox Name="txtStatus" Margin="0,0,0,10"/>
+            <TextBlock Text="Пробег" Margin="0,0,0,5"/>
+            <TextBox Name="txtMileage" Margin="0,0,0,10"/>
             <TextBlock Text="Продавец" Margin="0,0,0,5"/>
             <TextBox Name="txtSellerName" Margin="0,0,0,10"/>
+            <TextBlock Text="Номер продавца" Margin="0,0,0,5"/>
+            <TextBox Name="txtSellerPhone" Margin="0,0,0,10"/>
             <TextBlock Text="Описание" Margin="0,0,0,5"/>
             <TextBox Name="txtDescription" Margin="0,0,0,20" Height="100" TextWrapping="Wrap" AcceptsReturn="True"/>
             <TextBlock Text="Фотография" Margin="0,0,0,5"/>

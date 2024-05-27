@@ -25,6 +25,7 @@ namespace CarPlusWPF
     public partial class AddCar : Window
     {
         private Car _car;
+        private string _filePath = "cars.json";
 
         public AddCar(Car car = null)
         {
@@ -39,13 +40,23 @@ namespace CarPlusWPF
                 txtColor.Text = _car.Color;
                 txtConfiguration.Text = _car.Configuration;
                 txtPrice.Text = _car.Price.ToString();
+                txtMileage.Text = _car.Mileage.ToString();
+                cbStatus.SelectedValue = _car.Status;
                 txtSellerName.Text = _car.SellerName;
+                txtSellerPhone.Text = _car.SellerPhone;
                 txtDescription.Text = _car.Description;
                 if (!string.IsNullOrEmpty(_car.PhotoPath))
                 {
                     imgPhoto.Source = new BitmapImage(new Uri(_car.PhotoPath, UriKind.RelativeOrAbsolute));
                 }
             }
+
+            Car.OnSellerNameChanged += UpdateSellerName;
+            Car.OnSellerPhoneChanged += UpdateSellerPhone;
+
+            // Initialize the seller name and phone
+            UpdateSellerName(Login.CurrentUser.FullName);
+            UpdateSellerPhone(Login.CurrentUser.Phone);
         }
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
@@ -55,21 +66,45 @@ namespace CarPlusWPF
             _car.Color = txtColor.Text;
             _car.Configuration = txtConfiguration.Text;
             _car.Price = decimal.Parse(txtPrice.Text);
-            _car.SellerName = txtSellerName.Text;
+            _car.Mileage = int.Parse(txtMileage.Text);
+            _car.Status = (cbStatus.SelectedItem as ComboBoxItem)?.Content.ToString();
             _car.Description = txtDescription.Text;
             _car.SellerEmail = Login.CurrentUser.Email;
+            _car.SellerName = txtSellerName.Text;
+            _car.SellerPhone = txtSellerPhone.Text;
 
             if (_car.PhotoPath == null && imgPhoto.Source != null)
             {
                 SavePhoto();
             }
 
+            SaveCar(_car);
+
             MainWindow mainWindow = new MainWindow();
-            mainWindow.AddCar(_car);
             mainWindow.Show();
             Close();
         }
-        
+
+        private void SaveCar(Car car)
+        {
+            List<Car> cars;
+            if (File.Exists(_filePath))
+            {
+                var json = File.ReadAllText(_filePath);
+                cars = JsonSerializer.Deserialize<List<Car>>(json) ?? new List<Car>();
+            }
+            else
+            {
+                cars = new List<Car>();
+            }
+
+            cars.Add(car);
+
+            var options = new JsonSerializerOptions { WriteIndented = true };
+            var jsonString = JsonSerializer.Serialize(cars, options);
+            File.WriteAllText(_filePath, jsonString);
+        }
+
         private void SavePhoto()
         {
             string imagesPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images");
@@ -100,6 +135,18 @@ namespace CarPlusWPF
             MainWindow mainWindow = new MainWindow();
             mainWindow.Show();
             Close();
+        }
+
+        private void UpdateSellerName(string sellerName)
+        {
+            txtSellerName.Text = sellerName;
+            _car.SellerName = sellerName;
+        }
+
+        private void UpdateSellerPhone(string sellerPhone)
+        {
+            txtSellerPhone.Text = sellerPhone;
+            _car.SellerPhone = sellerPhone;
         }
     }
 }

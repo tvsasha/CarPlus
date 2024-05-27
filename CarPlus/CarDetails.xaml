@@ -5,26 +5,63 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CarPlusWPF"
         mc:Ignorable="d"
-        Title="Детали автомобиля" Height="650" Width="800">
-    <Grid>
-        <StackPanel>
-            <TextBlock Text="VIN:" FontWeight="Bold"/>
-            <TextBlock Name="txtVIN" Margin="0,0,0,10"/>
-            <TextBlock Text="Модель:" FontWeight="Bold"/>
-            <TextBlock Name="txtModel" Margin="0,0,0,10"/>
-            <TextBlock Text="Цвет:" FontWeight="Bold"/>
-            <TextBlock Name="txtColor" Margin="0,0,0,10"/>
-            <TextBlock Text="Конфигурация:" FontWeight="Bold"/>
-            <TextBlock Name="txtConfiguration" Margin="0,0,0,10"/>
-            <TextBlock Text="Цена:" FontWeight="Bold"/>
-            <TextBlock Name="txtPrice" Margin="0,0,0,10"/>
-            <TextBlock Text="Продавец:" FontWeight="Bold"/>
-            <TextBlock Name="txtSellerName" Margin="0,0,0,10"/>
-            <TextBlock Text="Описание:" FontWeight="Bold"/>
-            <TextBlock Name="txtDescription" Margin="0,0,0,10" TextWrapping="Wrap"/>
-            <TextBlock Text="Фото:" FontWeight="Bold"/>
-            <Image Name="imgPhoto" HorizontalAlignment="Center" Margin="0,0,0,10" MaxHeight="200" MaxWidth="300"/>
-            <Button Content="Закрыть" Click="CloseButton_Click" Width="100" HorizontalAlignment="Right"/>
+        Title="Детали автомобиля" Height="830" Width="800">
+    <Grid Margin="20">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Column="0" Grid.Row="0" Text="VIN" Margin="0,0,0,5"/>
+        <TextBox Grid.Column="0" Grid.Row="1" Name="txtVIN" Margin="0,0,0,10" IsReadOnly="True"/>
+
+        <TextBlock Grid.Column="1" Grid.Row="0" Text="Модель" Margin="0,0,0,5"/>
+        <TextBox Grid.Column="1" Grid.Row="1" Name="txtModel" Margin="0,0,0,10" IsReadOnly="True"/>
+
+        <TextBlock Grid.Column="0" Grid.Row="2" Text="Цвет" Margin="0,0,0,5"/>
+        <TextBox Grid.Column="0" Grid.Row="3" Name="txtColor" Margin="0,0,0,10" IsReadOnly="True"/>
+
+        <TextBlock Grid.Column="1" Grid.Row="2" Text="Конфигурация" Margin="0,0,0,5"/>
+        <TextBox Grid.Column="1" Grid.Row="3" Name="txtConfiguration" Margin="0,0,0,10" IsReadOnly="True"/>
+
+        <TextBlock Grid.Column="0" Grid.Row="4" Text="Цена" Margin="0,0,0,5"/>
+        <TextBox Grid.Column="0" Grid.Row="5" Name="txtPrice" Margin="0,0,0,10" IsReadOnly="True"/>
+
+        <TextBlock Grid.Column="1" Grid.Row="4" Text="Пробег" Margin="0,0,0,5"/>
+        <TextBox Grid.Column="1" Grid.Row="5" Name="txtMileage" Margin="0,0,0,10" IsReadOnly="True"/>
+
+        <TextBlock Grid.Column="0" Grid.Row="6" Text="Статус" Margin="0,0,0,5"/>
+        <TextBox Grid.Column="0" Grid.Row="7" Name="txtStatus" Margin="0,0,0,10" IsReadOnly="True"/>
+
+        <TextBlock Grid.Column="1" Grid.Row="6" Text="Продавец" Margin="0,0,0,5"/>
+        <TextBox Grid.Column="1" Grid.Row="7" Name="txtSellerName" Margin="0,0,0,10" IsReadOnly="True"/>
+
+        <TextBlock Grid.Column="0" Grid.Row="8" Text="Номер продавца" Margin="0,0,0,5"/>
+        <TextBox Grid.Column="0" Grid.Row="9" Name="txtSellerPhone" Margin="0,0,0,20" Height="80" IsReadOnly="True"/>
+
+        <TextBlock Grid.Column="1" Grid.Row="8" Text="Описание" Margin="0,0,0,5"/>
+        <TextBox Grid.Column="1" Grid.Row="9" Name="txtDescription" Margin="0,0,0,20" Height="80" TextWrapping="Wrap" AcceptsReturn="True" IsReadOnly="True"/>
+
+        <Grid Grid.Row="10" Grid.ColumnSpan="2" />
+        <StackPanel Grid.Row="11" Grid.ColumnSpan="2" HorizontalAlignment="Center">
+            <TextBlock Text="Фотография" Margin="0,0,0,5" HorizontalAlignment="Center"/>
+            <Image Name="imgPhoto" HorizontalAlignment="Center" Margin="0,0,0,10" MaxHeight="600" MaxWidth="600"/>
+            <Button Content="Закрыть" Click="CloseButton_Click" Width="100" HorizontalAlignment="Center"/>
         </StackPanel>
     </Grid>
 </Window>

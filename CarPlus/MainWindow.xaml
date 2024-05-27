@@ -13,6 +13,12 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+        <ComboBox x:Name="SortCriteriaComboBox" Text="Сортировка"  IsEditable="True" IsReadOnly="True"   Margin="10" Width="100" HorizontalAlignment="Left" SelectionChanged="SortCriteriaComboBox_SelectionChanged">
+            <ComboBoxItem Content="Модель" Tag="Model" Margin="0,0,10,0"/>
+            <ComboBoxItem Content="Цена" Tag="Price" Margin="0,0,10,0"/>
+            <ComboBoxItem Content="Пробег" Tag="Mileage" Margin="0,0,10,0"/>
+            <ComboBoxItem Content="Статус" Tag="Status" Margin="0,0,10,0"/>
+        </ComboBox>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
             <Button Content="Личный кабинет" Width="100" Margin="0,0,10,0" Click="UserCabinet"/>
             <Button Content="Вход" Width="100" Margin="0,0,10,0" Click="LoginButton_Click"/>
@@ -26,8 +32,9 @@
                         <GridViewColumn Header="Модель" DisplayMemberBinding="{Binding Model}" Width="100"/>
                         <GridViewColumn Header="Цвет" DisplayMemberBinding="{Binding Color}" Width="100"/>
                         <GridViewColumn Header="Цена" DisplayMemberBinding="{Binding Price}" Width="100"/>
-                        <GridViewColumn Header="Продавец" DisplayMemberBinding="{Binding SellerName}" Width="100"/>
-                        <GridViewColumn Header="Описание" DisplayMemberBinding="{Binding Description}" Width="200"/>
+                        <GridViewColumn Header="Статус" DisplayMemberBinding="{Binding Status}" Width="110"/>
+                        <GridViewColumn Header="Пробег" DisplayMemberBinding="{Binding Mileage}" Width="100"/>
+                        <GridViewColumn Header="Описание" DisplayMemberBinding="{Binding Description}" Width="350"/>
                     </GridView>
                 </ListView.View>
             </ListView>

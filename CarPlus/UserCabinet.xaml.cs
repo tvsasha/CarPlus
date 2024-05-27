@@ -30,14 +30,17 @@ namespace CarPlusWPF
             InitializeComponent();
             LoadUserCars();
             lvUserCars.ItemsSource = _userCars;
+            Car.UpdateSellerName(Login.CurrentUser.FullName);
+            Car.UpdateSellerPhone(Login.CurrentUser.Phone);
         }
+
         private void LoadUserCars()
         {
             if (System.IO.File.Exists(_filePath))
             {
                 var json = System.IO.File.ReadAllText(_filePath);
                 var allCars = JsonSerializer.Deserialize<List<Car>>(json) ?? new List<Car>();
-                _userCars = allCars.Where(c => c.SellerName == Login.CurrentUser.FullName).ToList();
+                _userCars = allCars.Where(c => c.SellerEmail == Login.CurrentUser.Email).ToList();
             }
             else
             {
@@ -65,21 +68,15 @@ namespace CarPlusWPF
         {
             if (lvUserCars.SelectedItem is Car selectedCar)
             {
-                EditCar editCarWindow = new EditCar(selectedCar);
-                editCarWindow.Show();
+                EditCar editCar = new EditCar(selectedCar);
+                editCar.Show();
                 Close();
-            }
-        }
-
-        private void DeleteCar_Button_Click(object sender, RoutedEventArgs e)
-        {
-            if (lvUserCars.SelectedItem is Car selectedCar)
-            {
-                _userCars.Remove(selectedCar);
-                SaveAllCars();
                 RefreshUserCars();
             }
         }
+
+
+
 
         private void SaveAllCars()
         {
@@ -99,6 +96,16 @@ namespace CarPlusWPF
         {
             lvUserCars.ItemsSource = null;
             lvUserCars.ItemsSource = _userCars;
+        }
+
+        private void DeleteCar_Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (lvUserCars.SelectedItem is Car selectedCar)
+            {
+                _userCars.Remove(selectedCar);
+                SaveAllCars();
+                RefreshUserCars();
+            }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

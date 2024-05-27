@@ -21,23 +21,33 @@ namespace CarPlusWPF
     /// </summary>
     public partial class CarDetails : Window
     {
+        private Car _car;
+
         public CarDetails(Car car)
         {
             InitializeComponent();
-            DataContext = car;
-            txtVIN.Text = car.VIN;
-            txtModel.Text = car.Model;
-            txtColor.Text = car.Color;
-            txtConfiguration.Text = car.Configuration;
-            txtPrice.Text = car.Price.ToString("C");
-            txtSellerName.Text = car.SellerName;
-            txtDescription.Text = car.Description;
+            _car = car;
+            DataContext = _car;
 
-            if (!string.IsNullOrEmpty(car.PhotoPath) && System.IO.File.Exists(car.PhotoPath))
+            if (_car != null)
             {
-                imgPhoto.Source = new BitmapImage(new Uri(car.PhotoPath, UriKind.RelativeOrAbsolute));
+                txtVIN.Text = _car.VIN;
+                txtModel.Text = _car.Model;
+                txtColor.Text = _car.Color;
+                txtConfiguration.Text = _car.Configuration;
+                txtPrice.Text = _car.Price.ToString();
+                txtMileage.Text = _car.Mileage.ToString();
+                txtStatus.Text = _car.Status;
+                txtSellerName.Text = _car.SellerName;
+                txtSellerPhone.Text = _car.SellerPhone;
+                txtDescription.Text = _car.Description;
+                if (!string.IsNullOrEmpty(_car.PhotoPath))
+                {
+                    imgPhoto.Source = new BitmapImage(new Uri(_car.PhotoPath, UriKind.RelativeOrAbsolute));
+                }
             }
         }
+
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
             Close();

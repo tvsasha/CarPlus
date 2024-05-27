@@ -6,7 +6,7 @@
         <TabControl>
             <TabItem Header="Объявления">
                 <Grid>
-                    <ListView Name="lvAllCars" SelectionChanged="LvAllCars_SelectionChanged">
+                    <ListView Name="lvAllCars" MouseDoubleClick="LvCars_MouseDoubleClick" SelectionChanged="LvAllCars_SelectionChanged">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="VIN" DisplayMemberBinding="{Binding VIN}" Width="100"/>

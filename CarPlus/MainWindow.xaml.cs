@@ -88,6 +88,7 @@ namespace CarPlus
             {
                 CarDetails carDetailsWindow = new CarDetails(selectedCar);
                 carDetailsWindow.Show();
+                carDetailsWindow.Topmost = true;
             }
         }
 
@@ -98,9 +99,38 @@ namespace CarPlus
                 MessageBox.Show("Войдите в систему для доступа к личному кабинету");
                 return;
             }
-            UserCabinet userCabinet = new UserCabinet();
-            userCabinet.Show();
-            Close();
+            User user = Login.CurrentUser;
+            if (user.IsAdmin)
+            {
+                AdminPanel adminPanel = new AdminPanel();
+                adminPanel.Show();
+                Close();
+            }
+            else
+            {
+                UserCabinet userCabinet = new UserCabinet();
+                userCabinet.Show();
+                Close();
+            }
+            
         }
+
+        private void SortCriteriaComboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            if (SortCriteriaComboBox.SelectedItem is System.Windows.Controls.ComboBoxItem selectedItem)
+            {
+                string sortBy = selectedItem.Tag.ToString();
+                SortCars(sortBy);
+            }
+        }
+
+        private void SortCars(string sortBy)
+        {
+            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(lvCars.ItemsSource);
+            view.SortDescriptions.Clear();
+            view.SortDescriptions.Add(new SortDescription(sortBy, ListSortDirection.Ascending));
+            view.Refresh();
+        }
+
     }
 }
