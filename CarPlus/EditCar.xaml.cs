@@ -60,9 +60,9 @@ namespace CarPlusWPF
                 Library_brains.ManagePhoto.SavePhoto(_car);
             }
             SaveAllCars();
-            Close();
             UserCabinet userCabinet = new UserCabinet();
             userCabinet.Show();
+            Close();
         }
 
         private void SaveAllCars()
@@ -98,9 +98,9 @@ namespace CarPlusWPF
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
-            Close();
             UserCabinet userCabinet = new UserCabinet();
             userCabinet.Show();
+            Close();
         }
     }
 }

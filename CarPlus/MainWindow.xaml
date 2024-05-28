@@ -34,7 +34,7 @@
                         <GridViewColumn Header="Цена" DisplayMemberBinding="{Binding Price}" Width="100"/>
                         <GridViewColumn Header="Статус" DisplayMemberBinding="{Binding Status}" Width="110"/>
                         <GridViewColumn Header="Пробег" DisplayMemberBinding="{Binding Mileage}" Width="100"/>
-                        <GridViewColumn Header="Описание" DisplayMemberBinding="{Binding Description}" Width="350"/>
+                        <GridViewColumn Header="Описание" DisplayMemberBinding="{Binding Description}" Width="340"/>
                     </GridView>
                 </ListView.View>
             </ListView>
