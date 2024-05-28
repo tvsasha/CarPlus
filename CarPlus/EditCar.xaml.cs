@@ -1,20 +1,12 @@
 ﻿using Library_classes;
-using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace CarPlusWPF
 {
@@ -46,10 +38,7 @@ namespace CarPlusWPF
                 txtSellerName.Text = _car.SellerName;
                 txtSellerPhone.Text = _car.SellerPhone;
                 txtDescription.Text = _car.Description;
-                if (!string.IsNullOrEmpty(_car.PhotoPath))
-                {
-                    imgPhoto.Source = new BitmapImage(new Uri(_car.PhotoPath, UriKind.RelativeOrAbsolute));
-                }
+                Photo.OpenPhoto(_car.PhotoPath, imgPhoto);
             }
         }
 
@@ -68,7 +57,7 @@ namespace CarPlusWPF
 
             if (_car.PhotoPath == null && imgPhoto.Source != null)
             {
-                SavePhoto();
+                Library_brains.ManagePhoto.SavePhoto(_car);
             }
             SaveAllCars();
             Close();
@@ -78,7 +67,7 @@ namespace CarPlusWPF
 
         private void SaveAllCars()
         {
-            var json = System.IO.File.ReadAllText(_carsFilePath);
+            var json = File.ReadAllText(_carsFilePath);
             var allCars = JsonSerializer.Deserialize<List<Car>>(json) ?? new List<Car>();
 
             var carToUpdate = allCars.FirstOrDefault(c => c.VIN == _originalVIN);
@@ -99,32 +88,12 @@ namespace CarPlusWPF
 
             var options = new JsonSerializerOptions { WriteIndented = true };
             json = JsonSerializer.Serialize(allCars, options);
-            System.IO.File.WriteAllText(_carsFilePath, json);
+            File.WriteAllText(_carsFilePath, json);
         }
 
         private void UploadPhotoButton_Click(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "Image files (*.png;*.jpeg;*.jpg)|*.png;*.jpeg;*.jpg";
-            if (openFileDialog.ShowDialog() == true)
-            {
-                imgPhoto.Source = new BitmapImage(new Uri(openFileDialog.FileName, UriKind.Absolute));
-                _car.PhotoPath = openFileDialog.FileName;
-            }
-        }
-
-        private void SavePhoto()
-        {
-            string imagesPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images");
-            if (!System.IO.Directory.Exists(imagesPath))
-            {
-                System.IO.Directory.CreateDirectory(imagesPath);
-            }
-
-            string photoFileName = $"{_car.VIN}.jpg";
-            string photoPath = System.IO.Path.Combine(imagesPath, photoFileName);
-
-            _car.PhotoPath = photoPath;
+            Photo.AddPhoto(imgPhoto, _car);
         }
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)

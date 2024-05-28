@@ -57,11 +57,7 @@ namespace CarPlusWPF
 
         private void LvUserCars_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (lvUserCars.SelectedItem is Car selectedCar)
-            {
-                CarDetails carDetailsWindow = new CarDetails(selectedCar);
-                carDetailsWindow.Show();
-            }
+            return;
         }
 
         private void EditCar_Button_Click(object sender, RoutedEventArgs e)
@@ -113,6 +109,17 @@ namespace CarPlusWPF
             MainWindow mainWindow = new MainWindow();
             mainWindow.Show();
             Close();
+        }
+
+        private void LvCars_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (lvUserCars.SelectedItem is Car selectedCar)
+            {
+                CarDetails carDetailsWindow = new CarDetails(selectedCar);
+                carDetailsWindow.Topmost = true;
+                carDetailsWindow.Show();
+                carDetailsWindow.Topmost = false; 
+            }
         }
     }
 }

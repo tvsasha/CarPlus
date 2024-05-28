@@ -9,7 +9,7 @@
     <Grid>
         <StackPanel Orientation="Vertical" Margin="10">
             <TextBlock Text="Мои объявления" FontSize="16" Margin="0,0,0,10"/>
-            <ListView x:Name="lvUserCars" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectionChanged="LvUserCars_SelectionChanged">
+            <ListView x:Name="lvUserCars" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  MouseDoubleClick="LvCars_MouseDoubleClick" SelectionChanged="LvUserCars_SelectionChanged">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="Модель" DisplayMemberBinding="{Binding Model}" Width="150"/>

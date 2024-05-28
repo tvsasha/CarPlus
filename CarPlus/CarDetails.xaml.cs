@@ -41,10 +41,7 @@ namespace CarPlusWPF
                 txtSellerName.Text = _car.SellerName;
                 txtSellerPhone.Text = _car.SellerPhone;
                 txtDescription.Text = _car.Description;
-                if (!string.IsNullOrEmpty(_car.PhotoPath))
-                {
-                    imgPhoto.Source = new BitmapImage(new Uri(_car.PhotoPath, UriKind.RelativeOrAbsolute));
-                }
+                Photo.OpenPhoto(_car.PhotoPath, imgPhoto);
             }
         }
 

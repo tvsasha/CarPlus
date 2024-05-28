@@ -54,7 +54,6 @@ namespace CarPlusWPF
             Car.OnSellerNameChanged += UpdateSellerName;
             Car.OnSellerPhoneChanged += UpdateSellerPhone;
 
-            // Initialize the seller name and phone
             UpdateSellerName(Login.CurrentUser.FullName);
             UpdateSellerPhone(Login.CurrentUser.Phone);
         }
@@ -75,7 +74,8 @@ namespace CarPlusWPF
 
             if (_car.PhotoPath == null && imgPhoto.Source != null)
             {
-                SavePhoto();
+                Library_brains.ManagePhoto.SavePhoto(_car);
+                
             }
 
             SaveCar(_car);
@@ -105,29 +105,9 @@ namespace CarPlusWPF
             File.WriteAllText(_filePath, jsonString);
         }
 
-        private void SavePhoto()
-        {
-            string imagesPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images");
-            if (!Directory.Exists(imagesPath))
-            {
-                Directory.CreateDirectory(imagesPath);
-            }
-
-            string photoFileName = $"{_car.VIN}.jpg";
-            string photoPath = System.IO.Path.Combine(imagesPath, photoFileName);
-
-            _car.PhotoPath = photoPath;
-        }
-
         private void UploadPhotoButton_Click(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "Image files (*.png;*.jpeg;*.jpg)|*.png;*.jpeg;*.jpg";
-            if (openFileDialog.ShowDialog() == true)
-            {
-                imgPhoto.Source = new BitmapImage(new Uri(openFileDialog.FileName, UriKind.Absolute));
-                _car.PhotoPath = openFileDialog.FileName;
-            }
+            Photo.AddPhoto(imgPhoto, _car);
         }
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)

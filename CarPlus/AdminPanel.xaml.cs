@@ -67,9 +67,9 @@ namespace CarPlusWPF
             if (lvAllCars.SelectedItem is Car selectedCar)
             {
                 CarDetails carDetailsWindow = new CarDetails(selectedCar);
-                carDetailsWindow.Topmost = true; // Сделать окно верхним
+                carDetailsWindow.Topmost = true;
                 carDetailsWindow.Show();
-                carDetailsWindow.Topmost = false; // Вернуть свойство в false после отображения
+                carDetailsWindow.Topmost = false;
             }
         }
 

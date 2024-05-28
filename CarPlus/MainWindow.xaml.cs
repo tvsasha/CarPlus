@@ -111,6 +111,7 @@ namespace CarPlus
                 UserCabinet userCabinet = new UserCabinet();
                 userCabinet.Show();
                 Close();
+
             }
             
         }
