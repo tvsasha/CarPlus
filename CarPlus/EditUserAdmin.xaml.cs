@@ -28,7 +28,6 @@ namespace CarPlusWPF
         {
             InitializeComponent();
             _user = user;
-            DataContext = _user;
 
             if (_user != null)
             {

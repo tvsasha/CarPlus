@@ -57,29 +57,25 @@ namespace CarPlusWPF
 
                 if (user.IsAdmin)
                 {
-                    // Откройте администраторскую панель
+                    // администраторская панель
                     AdminPanel adminPanel = new AdminPanel();
                     adminPanel.Show();
                     Close();
                 }
                 else
                 {
-                    // Откройте обычную панель пользователя
-                    MainWindow mainWindow = new MainWindow();
-                    mainWindow.Show();
-                    Close();
+                    // обычная панель пользователя
+                    WindowsHelper.OpenMainWindow(this);
                 }
             }
             else
             {
-                MessageBox.Show("Неверный email или пароль. Попробуйте снова.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Неверный email или пароль. Попробуйте снова.");
             }
         }
-            private void Login_Closed(object sender, EventArgs e)
+        private void Login_Closed(object sender, EventArgs e)
         {
-            MainWindow mainWindow = new MainWindow();
-            mainWindow.Show();         
-            Close();
+            WindowsHelper.OpenMainWindow(this);
         }
     }
 }

@@ -26,8 +26,7 @@ namespace CarPlusWPF
         public CarDetails(Car car)
         {
             InitializeComponent();
-            _car = car;
-            DataContext = _car;
+            _car = car;            
 
             if (_car != null)
             {

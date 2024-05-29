@@ -29,7 +29,6 @@ namespace CarPlusWPF
             InitializeComponent();
 
             _user = user ?? new User();
-            DataContext = _user;
 
             if (_user != null)
             {
@@ -51,9 +50,7 @@ namespace CarPlusWPF
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow mainWindow = new MainWindow();
-            mainWindow.Show();
-            Close();
+            WindowsHelper.OpenMainWindow(this);
         }
 
         private string _filePath = "users.json";
@@ -108,7 +105,7 @@ namespace CarPlusWPF
             _users.Add(newUser);
             SaveUsers();
 
-            MessageBox.Show("Регистрация прошла успешно!", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
+            MessageBox.Show("Регистрация прошла успешно!");
 
             MainWindow mainWindow = new MainWindow();
             mainWindow.Show();

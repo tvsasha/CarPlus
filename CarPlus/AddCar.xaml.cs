@@ -31,7 +31,6 @@ namespace CarPlusWPF
         {
             InitializeComponent();
             _car = car ?? new Car();
-            DataContext = _car;
 
             if (_car != null)
             {
@@ -112,9 +111,7 @@ namespace CarPlusWPF
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow mainWindow = new MainWindow();
-            mainWindow.Show();
-            Close();
+            WindowsHelper.OpenMainWindow(this);
         }
 
         private void UpdateSellerName(string sellerName)

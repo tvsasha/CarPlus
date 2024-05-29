@@ -24,7 +24,6 @@ namespace CarPlusWPF
             InitializeComponent();
             _car = car;
             _originalVIN = car.VIN;
-            DataContext = _car;
 
             if (_car != null)
             {

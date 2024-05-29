@@ -15,8 +15,11 @@
         public int Mileage { get; set; } 
         public string SellerPhone { get; set; }
 
-        public static event Action<string> OnSellerNameChanged;
-        public static event Action<string> OnSellerPhoneChanged;
+        public delegate void SellerNameChangedHandler(string newSellerName);
+        public delegate void SellerPhoneChangedHandler(string newSellerPhone);
+
+        public static event SellerNameChangedHandler OnSellerNameChanged;
+        public static event SellerPhoneChangedHandler OnSellerPhoneChanged;
 
         public static void UpdateSellerName(string sellerName)
         {

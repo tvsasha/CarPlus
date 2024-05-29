@@ -55,10 +55,6 @@ namespace CarPlusWPF
                     MessageBox.Show($"Ошибка при загрузке изображения: {ex.Message}");
                 }
             }
-            else
-            {
-                MessageBox.Show("Фотография отсутствует.");
-            }
         }
     }
 }
