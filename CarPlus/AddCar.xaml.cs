@@ -50,11 +50,6 @@ namespace CarPlusWPF
                 }
             }
 
-            Car.OnSellerNameChanged += UpdateSellerName;
-            Car.OnSellerPhoneChanged += UpdateSellerPhone;
-
-            UpdateSellerName(Login.CurrentUser.FullName);
-            UpdateSellerPhone(Login.CurrentUser.Phone);
         }
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
@@ -112,18 +107,6 @@ namespace CarPlusWPF
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
             WindowsHelper.OpenMainWindow(this);
-        }
-
-        private void UpdateSellerName(string sellerName)
-        {
-            txtSellerName.Text = sellerName;
-            _car.SellerName = sellerName;
-        }
-
-        private void UpdateSellerPhone(string sellerPhone)
-        {
-            txtSellerPhone.Text = sellerPhone;
-            _car.SellerPhone = sellerPhone;
         }
     }
 }

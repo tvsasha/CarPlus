@@ -14,5 +14,16 @@ namespace Library_classes
         public string Password { get; set; }
         public bool IsAdmin { get; set; } 
         public List<string> CarVINs { get; set; }
+
+        public delegate void UserPhoneChangedHandler(string phone);
+
+        // Событие изменения номера пользователя
+        public static event UserPhoneChangedHandler OnUserPhoneChanged;
+
+        // Статический метод для обновления номера пользователя
+        public static void UpdateUserPhone(string phone)
+        {
+            OnUserPhoneChanged?.Invoke(phone);
+        }
     }
 }

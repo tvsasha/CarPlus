@@ -30,8 +30,6 @@ namespace CarPlusWPF
             InitializeComponent();
             LoadUserCars();
             lvUserCars.ItemsSource = _userCars;
-            Car.UpdateSellerName(Login.CurrentUser.FullName);
-            Car.UpdateSellerPhone(Login.CurrentUser.Phone);
         }
 
         private void LoadUserCars()

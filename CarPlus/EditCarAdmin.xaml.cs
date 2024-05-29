@@ -22,7 +22,8 @@ namespace CarPlusWPF
         {
             InitializeComponent();
             _car = car;
-            DataContext = _car;
+            User.OnUserPhoneChanged += UpdateSellerPhone;
+
 
             if (_car != null)
             {
@@ -38,6 +39,13 @@ namespace CarPlusWPF
                 txtDescription.Text = _car.Description;
                 Photo.OpenPhoto(_car.PhotoPath, imgPhoto);
             }
+
+        }
+
+        private void UpdateSellerPhone(string newSellerPhone)
+        {
+            _car.SellerPhone = newSellerPhone;
+            txtSellerPhone.Text = newSellerPhone;
         }
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
@@ -57,6 +65,8 @@ namespace CarPlusWPF
             {
                 Library_brains.ManagePhoto.SavePhoto(_car);
             }
+
+
             SaveAllCars();
             Close();
         }

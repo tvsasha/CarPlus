@@ -37,7 +37,6 @@ namespace CarPlusWPF
                 txtPassword.Password = _user.Password;
                 txtConfirmPassword.Password = _user.Password;
                 chkIsAdmin.IsChecked = _user.IsAdmin;
-
             }
         }
 
@@ -45,7 +44,7 @@ namespace CarPlusWPF
         {
             if (txtPassword.Password != txtConfirmPassword.Password)
             {
-                MessageBox.Show("Пароли не совпадают.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Пароли не совпадают");
                 return;
             }
 
@@ -55,9 +54,13 @@ namespace CarPlusWPF
             _user.Password = txtPassword.Password;
             _user.IsAdmin = chkIsAdmin.IsChecked ?? false;
 
+            // Вызываем событие обновления номера пользователя
+            User.UpdateUserPhone(_user.Phone);
             SaveAllUsers();
             Close();
         }
+
+
 
         private void SaveAllUsers()
         {
